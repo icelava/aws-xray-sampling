@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AWS scripts", "AWS scripts", "{12C04BEF-FF30-49B0-8948-6A813C36CE98}"
 	ProjectSection(SolutionItems) = preProject
 		AWS scripts\EC2_Ubuntu_user_data.sh = AWS scripts\EC2_Ubuntu_user_data.sh
+		AWS scripts\XRayFrontWeb.service = AWS scripts\XRayFrontWeb.service
 	EndProjectSection
 EndProject
 Global
