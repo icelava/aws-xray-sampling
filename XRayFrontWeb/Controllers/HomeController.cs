@@ -28,6 +28,14 @@ namespace XRayFrontWeb.Controllers
 			return View();
 		}
 
+		public IActionResult Responsiveness()
+		{
+			// Simulate random slowless.
+			Task.Delay((new Random()).Next(2000)).Wait();
+			
+			return View();
+		}
+
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
