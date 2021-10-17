@@ -40,6 +40,15 @@ namespace XRayFrontWeb.Controllers
 			return View();
 		}
 
+		public IActionResult Reliability()
+		{
+			// Simulate random exception.
+			var exceptionChance = (new Random()).Next(4);
+			if (exceptionChance == 0) throw new Exception("Something's gone wrong 25% of the time.");
+
+			return View();
+		}
+
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
