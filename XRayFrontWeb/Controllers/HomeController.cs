@@ -28,15 +28,12 @@ namespace XRayFrontWeb.Controllers
 			return View();
 		}
 
-		public IActionResult Responsiveness()
+		public async Task<IActionResult> Responsiveness()
 		{
 			// Simulate random slowless.
-			var delayedTime = (new Random()).Next(2000);
-			Task.Delay(delayedTime).Wait();
-
+			var delayedTime = await Simulates.ExternalService.DelayRandomly();
+			
 			ViewData["Timing"] = delayedTime + "ms";
-
-
 			return View();
 		}
 
