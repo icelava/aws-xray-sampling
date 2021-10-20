@@ -31,10 +31,19 @@ namespace XRayFrontWeb
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
+			#region AWS configuration
 			AwsConfig.Instance = this.Configuration.GetSection("Aws").Get<AwsConfig>();
 
+			// X-Ray to automatically trace web requests and responses.
 			app.UseXRay("XRayFrontWeb", this.Configuration);
+
+			// Get all AWS SDK clients to auto subsegment requests to AWS services.
 			AWSSDKHandler.RegisterXRayForAllServices();
+
+			// OR selectively register which SDK clients trace with X-Ray.
+			//AWSSDKHandler.RegisterXRay<Amazon.S3.IAmazonS3>();
+
+			#endregion AWS configuration
 
 			if (env.IsDevelopment())
 			{
