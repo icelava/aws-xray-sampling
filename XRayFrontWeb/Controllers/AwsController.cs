@@ -29,6 +29,8 @@ namespace XRayFrontWeb.Controllers
 			var fileName = string.Format("{0}.jpg", id);
 
 			Stream imgStream = await this.GetFileObject(fileName);
+			if (imgStream == null) return NotFound();
+
 			Response.Headers.Add("Content-Disposition", new ContentDisposition
 			{
 				FileName = fileName,
