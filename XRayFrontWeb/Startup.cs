@@ -1,4 +1,5 @@
 using Amazon.XRay.Recorder.Core;
+using Amazon.XRay.Recorder.Handlers.AwsSdk;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +34,7 @@ namespace XRayFrontWeb
 			AwsConfig.Instance = this.Configuration.GetSection("Aws").Get<AwsConfig>();
 
 			app.UseXRay("XRayFrontWeb", this.Configuration);
+			AWSSDKHandler.RegisterXRayForAllServices();
 
 			if (env.IsDevelopment())
 			{

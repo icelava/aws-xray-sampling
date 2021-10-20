@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Amazon;
+using Amazon.S3;
+using Microsoft.AspNetCore.Mvc;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Amazon;
-using Amazon.S3;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using XRayFrontWeb.Configuration;
 
 namespace XRayFrontWeb.Controllers
