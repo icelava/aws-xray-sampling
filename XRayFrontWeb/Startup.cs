@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XRayFrontWeb.Configuration;
 
 namespace XRayFrontWeb
 {
@@ -29,7 +30,9 @@ namespace XRayFrontWeb
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			app.UseXRay("XRayFrontWeb", Configuration);
+			AwsConfig.Instance = this.Configuration.GetSection("Aws").Get<AwsConfig>();
+
+			app.UseXRay("XRayFrontWeb", this.Configuration);
 
 			if (env.IsDevelopment())
 			{
