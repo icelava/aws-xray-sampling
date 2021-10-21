@@ -1,0 +1,13 @@
+[Unit] 
+Description=Back end web API for X-Ray
+
+[Service] 
+WorkingDirectory=/var/www/XRayBackApi
+ExecStart=/usr/bin/dotnet /var/www/XRayBackApi/XRayBackApi.dll 
+Restart=always 
+RestartSec=15 # Restart service after 15 seconds if dotnet service crashes 
+SyslogIdentifier=offershare-web-app
+Environment=ASPNETCORE_ENVIRONMENT=Production 
+
+[Install] 
+WantedBy=multi-user.target

@@ -4,12 +4,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XRayFrontWeb", "XRayFrontWeb\XRayFrontWeb.csproj", "{C838A625-79C4-4963-ACBF-22E753AB3E54}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C591DB28-DACF-457E-8E9F-82A42E978A63} = {C591DB28-DACF-457E-8E9F-82A42E978A63}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AWS scripts", "AWS scripts", "{12C04BEF-FF30-49B0-8948-6A813C36CE98}"
 	ProjectSection(SolutionItems) = preProject
 		AWS scripts\EC2_Ubuntu_user_data.sh = AWS scripts\EC2_Ubuntu_user_data.sh
+		AWS scripts\XRayBackApi.service = AWS scripts\XRayBackApi.service
 		AWS scripts\XRayFrontWeb.service = AWS scripts\XRayFrontWeb.service
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XRayBackApi", "XRayBackApi\XRayBackApi.csproj", "{C591DB28-DACF-457E-8E9F-82A42E978A63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,10 @@ Global
 		{C838A625-79C4-4963-ACBF-22E753AB3E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C838A625-79C4-4963-ACBF-22E753AB3E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C838A625-79C4-4963-ACBF-22E753AB3E54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C591DB28-DACF-457E-8E9F-82A42E978A63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C591DB28-DACF-457E-8E9F-82A42E978A63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C591DB28-DACF-457E-8E9F-82A42E978A63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C591DB28-DACF-457E-8E9F-82A42E978A63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
