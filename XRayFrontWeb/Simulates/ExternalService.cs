@@ -1,13 +1,19 @@
 ﻿using Amazon.XRay.Recorder.Core;
+using Amazon.XRay.Recorder.Handlers.System.Net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace XRayFrontWeb.Simulates
 {
     public class ExternalService
     {
+		public static HttpClient GetTracingHttpClient()
+		{
+			return new HttpClient(new HttpClientXRayTracingHandler(new HttpClientHandler()));
+		}
 		public static async Task<int> DelayRandomly()
 		{
 			AWSXRayRecorder.Instance.BeginSubsegment("DelayRandomlyService");

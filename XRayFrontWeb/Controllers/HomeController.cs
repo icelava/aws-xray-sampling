@@ -4,8 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using XRayFrontWeb.Configuration;
 using XRayFrontWeb.Models;
+using XRayFrontWeb.Simulates;
 
 namespace XRayFrontWeb.Controllers
 {
@@ -33,6 +36,18 @@ namespace XRayFrontWeb.Controllers
 			// Simulate random slowless.
 			var delayedTime = await Simulates.ExternalService.DelayRandomly();
 			
+			ViewData["Timing"] = delayedTime + "ms";
+			return View();
+		}
+
+		public async Task<IActionResult> MultiTierResponsiveness()
+		{
+			var url = string.Format("http://{0}/api/Tier", ApiLayer.Instance.Host);
+			var httpClient = ExternalService.GetTracingHttpClient();
+			var response = await httpClient.GetAsync(url);
+
+			var delayedTime = await response.Content.ReadAsStringAsync();
+
 			ViewData["Timing"] = delayedTime + "ms";
 			return View();
 		}

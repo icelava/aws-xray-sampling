@@ -31,6 +31,8 @@ namespace XRayFrontWeb
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
+			ApiLayer.Instance = this.Configuration.GetSection("ApiLayer").Get<ApiLayer>();
+
 			#region AWS configuration
 			AwsConfig.Instance = this.Configuration.GetSection("Aws").Get<AwsConfig>();
 
