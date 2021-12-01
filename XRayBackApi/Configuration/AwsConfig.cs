@@ -14,6 +14,12 @@ namespace XRayBackApi.Configuration
 		public string SecretAccessKey { get; set; }
 		public string S3Bucket { get; set; }
 
+		public XRayConfig XRay { get; set; }
+	}
 
+	public class XRayConfig
+	{
+		public string System { get; set; }
+		public string AppSegment { get; set; }
 	}
 }

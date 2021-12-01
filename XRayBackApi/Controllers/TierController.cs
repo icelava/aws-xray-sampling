@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Amazon.XRay.Recorder.Core;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XRayBackApi.Configuration;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,6 +18,8 @@ namespace XRayBackApi.Controllers
 		[HttpGet]
 		public async Task<int> Get()
 		{
+			AWSXRayRecorder.Instance.AddAnnotation("System", AwsConfig.Instance.XRay.System);
+
 			var delayedTime = (new Random()).Next(1500);
 			if (delayedTime == 0) return delayedTime;
 
