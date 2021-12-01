@@ -1,5 +1,6 @@
 ﻿using Amazon;
 using Amazon.S3;
+using Amazon.XRay.Recorder.Core;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Net;
@@ -20,6 +21,8 @@ namespace XRayFrontWeb.Controllers
 		// GET: AwsController/Image/<FILENAME WITHOUT .JPG>
 		public async Task<IActionResult> Image(string id)
 		{
+			this.ApplySystemAnnotation();
+
 			if (string.IsNullOrWhiteSpace(id)) return NotFound();
 
 			var fileName = string.Format("{0}.jpg", id);
@@ -38,6 +41,8 @@ namespace XRayFrontWeb.Controllers
 
 		private async Task<Stream> GetFileObject(string fileName)
 		{
+			this.ApplySystemAnnotation();
+
 			string filePath = string.Format("images/{0}", fileName);
 			var s3Client = new AmazonS3Client(AwsConfig.Instance.AccessKeyId,
 				AwsConfig.Instance.SecretAccessKey,
@@ -62,6 +67,11 @@ namespace XRayFrontWeb.Controllers
 				if (ex.StatusCode == HttpStatusCode.NotFound) return null;
 				throw;
 			}
+		}
+
+		private void ApplySystemAnnotation()
+		{
+			AWSXRayRecorder.Instance.AddAnnotation("System", AwsConfig.Instance.XRay.System);
 		}
 	}
 }

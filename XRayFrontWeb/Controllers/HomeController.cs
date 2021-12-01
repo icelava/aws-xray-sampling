@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Amazon.XRay.Recorder.Core;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,8 @@ namespace XRayFrontWeb.Controllers
 
 		public async Task<IActionResult> Responsiveness()
 		{
+			this.ApplySystemAnnotation();
+
 			// Simulate random slowless.
 			var delayedTime = await Simulates.ExternalService.DelayRandomly();
 			
@@ -42,6 +45,8 @@ namespace XRayFrontWeb.Controllers
 
 		public async Task<IActionResult> MultiTierResponsiveness()
 		{
+			this.ApplySystemAnnotation();
+
 			var url = string.Format("http://{0}/api/Tier", ApiLayer.Instance.Host);
 			var httpClient = ExternalService.GetTracingHttpClient();
 			var response = await httpClient.GetAsync(url);
@@ -54,6 +59,8 @@ namespace XRayFrontWeb.Controllers
 
 		public IActionResult Reliability()
 		{
+			this.ApplySystemAnnotation();
+
 			// Simulate random exception.
 			var exceptionChance = (new Random()).Next(4);
 			if (exceptionChance == 0) throw new Exception("Something's gone wrong 25% of the time.");
@@ -65,6 +72,11 @@ namespace XRayFrontWeb.Controllers
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+		}
+
+		private void ApplySystemAnnotation()
+		{
+			AWSXRayRecorder.Instance.AddAnnotation("System", AwsConfig.Instance.XRay.System);
 		}
 	}
 }
