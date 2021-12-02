@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using XRayFrontWeb.Components;
 using XRayFrontWeb.Configuration;
 using XRayFrontWeb.Models;
 using XRayFrontWeb.Simulates;
@@ -34,7 +35,7 @@ namespace XRayFrontWeb.Controllers
 
 		public async Task<IActionResult> Responsiveness()
 		{
-			this.ApplySystemAnnotation();
+			Tracer.InitRequest();
 
 			// Simulate random slowless.
 			var delayedTime = await Simulates.ExternalService.DelayRandomly();
@@ -45,7 +46,7 @@ namespace XRayFrontWeb.Controllers
 
 		public async Task<IActionResult> MultiTierResponsiveness()
 		{
-			this.ApplySystemAnnotation();
+			Tracer.InitRequest();
 
 			var url = string.Format("http://{0}/api/Tier", ApiLayer.Instance.Host);
 			var httpClient = ExternalService.GetTracingHttpClient();
@@ -59,7 +60,7 @@ namespace XRayFrontWeb.Controllers
 
 		public IActionResult Reliability()
 		{
-			this.ApplySystemAnnotation();
+			Tracer.InitRequest();
 
 			// Simulate random exception.
 			var exceptionChance = (new Random()).Next(4);
@@ -72,11 +73,6 @@ namespace XRayFrontWeb.Controllers
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-		}
-
-		private void ApplySystemAnnotation()
-		{
-			AWSXRayRecorder.Instance.AddAnnotation("System", AwsConfig.Instance.XRay.System);
 		}
 	}
 }
