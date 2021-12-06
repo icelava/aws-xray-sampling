@@ -37,7 +37,7 @@ namespace XRayFrontWeb
 			AwsConfig.Instance = this.Configuration.GetSection("Aws").Get<AwsConfig>();
 
 			// X-Ray to automatically trace web requests and responses.
-			app.UseXRay("XRayFrontWeb", this.Configuration);
+			app.UseXRay(AwsConfig.Instance.XRay.AppSegment, this.Configuration);
 
 			// Get all AWS SDK clients to auto subsegment requests to AWS services.
 			AWSSDKHandler.RegisterXRayForAllServices();
